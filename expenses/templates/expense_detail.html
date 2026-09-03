@@ -12,5 +12,7 @@
     <p>Date bought:{{ expense.date_bought}}</p>
 
     <a href="{% url 'expense_list' %}">Back</a>
+    <a href="{% url 'update_expense' id=expense.id %}">Edit</a>
+    <a href="{% url 'delete_expense' id=expense.id %}" >Delete</a>
 </body>
 </html>

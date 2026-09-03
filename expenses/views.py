@@ -33,4 +33,31 @@ def add_expense(request):
         'form':form
     }
     return render(request,'add_expense.html',context)
+
+def update_expense(request,id):
+    expense = Expense.objects.get(id=id, user=request.user)
+    if request.method == 'POST':
+        form = ExpenseForm(request.POST, instance=expense)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Expense Updated")
+            return redirect ('expense_detail',id=expense.id)
+    else:
+        form = ExpenseForm(user=request.user)
+    context = {
+        'form':form
+    }
+    return render(request,'add_expense.html',context)
+
+def delete_expense(request,id):
+    expense = Expense.objects.get(id=id,user=request.user)
+    if request.method == 'POST':
+        expense.delete()
+        messages.info(request, "Expense Deleted")
+        return redirect('expense_list')
+    context = {
+        'expense':expense
+    }
+    return render(request, 'delete_expense.html',context)
+
     
