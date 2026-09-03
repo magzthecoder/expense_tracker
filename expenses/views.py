@@ -2,7 +2,9 @@ from django.shortcuts import render,redirect
 from .models import Category, Expense
 from .forms import ExpenseForm
 from django.contrib import messages
-
+from django.db.models import Q
+from django.contrib.auth import authenticate, login, logout 
+from django.contrib.auth.models import User
 
 def expense_list(request):
     expenses = Expense.objects.filter(user=request.user)
@@ -22,9 +24,9 @@ def add_expense(request):
     if request.method == 'POST':
         form = ExpenseForm(request.POST,user=request.user)
         if form.is_valid():
-            expense = form.save(commit=False)
-            expense.user = request.user
-            expense.save()
+            expense = form.save(commit=False) #dont save expense into database yet
+            expense.user = request.user # attach expense to a user
+            expense.save() #now save expense into database since it has user
             messages.success(request, "Expense added successfully")
             return redirect('expense_list')
     else:
@@ -60,4 +62,58 @@ def delete_expense(request,id):
     }
     return render(request, 'delete_expense.html',context)
 
-    
+def login_page(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+
+        if user is None:
+            messages.error(request, "Invalid username or Password")
+            return redirect('login_page')
+        else:
+            login(request,user)
+            return redirect('expense_list')
+    return render (request,'login.html')
+
+def logout_page(request):
+    logout(request)
+    messages.info(request, "You are logged out")
+    return redirect('login_page')
+
+def register_page(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = User.objects.filter(username=username)
+
+        if user.exists():
+            messages.info(request, "Username already taken")
+            return redirect('register_page')
+
+        user = User.objects.create_user(
+            email=email,
+            username=username,
+            password=password
+        )
+        login(request, user)
+        messages.info(request, "Account created successfully")
+        return redirect('expense_list')
+    return render(request,'register_page.html')
+
+def search_expense(request):
+    query = request.GET.get('q', '')
+    expense = Expense.objects.filter(user=request.user)
+    category = Category.objects.filter(user=request.user)
+
+    if query:
+        expense = expense.filter(
+            Q(expense_name__icontains=query) | Q(category__icontains=query))
+    context = {
+        'expense':expense,
+        'category':category,
+        'query':query
+    }
+    return render(request,'expense_list.html',context)
