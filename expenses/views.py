@@ -128,15 +128,14 @@ def register_page(request):
 @login_required
 def search_expense(request):
     query = request.GET.get('q', '')
-    expense = Expense.objects.filter(user=request.user)
+    expenses = Expense.objects.filter(user=request.user)
     category = Category.objects.filter(user=request.user)
 
     if query:
-        expense = expense.filter(
-            Q(expense_name__icontains=query) | Q(category__icontains=query))
+        expenses = expenses.filter(
+            Q(expense_name__icontains=query) | Q(category__category__icontains=query))
     context = {
-        'expense':expense,
-        'category':category,
+        'expenses':expenses,
         'query':query
     }
     return render(request,'expense_list.html',context)
