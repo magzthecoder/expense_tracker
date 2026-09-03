@@ -5,7 +5,9 @@ from django.contrib import messages
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout 
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def expense_list(request):
     expenses = Expense.objects.filter(user=request.user)
     context = {
@@ -13,6 +15,7 @@ def expense_list(request):
     }
     return render(request,'expense_list.html',context)
 
+@login_required
 def expense_detail(request,id):
     expense = Expense.objects.get(id=id,user=request.user)
     context = {
@@ -20,6 +23,7 @@ def expense_detail(request,id):
     }
     return render(request,'expense_detail.html',context)
 
+@login_required
 def add_expense(request):
     if request.method == 'POST':
         form = ExpenseForm(request.POST,user=request.user)
@@ -36,6 +40,7 @@ def add_expense(request):
     }
     return render(request,'add_expense.html',context)
 
+@login_required
 def update_expense(request,id):
     expense = Expense.objects.get(id=id, user=request.user)
     if request.method == 'POST':
@@ -51,6 +56,7 @@ def update_expense(request,id):
     }
     return render(request,'add_expense.html',context)
 
+@login_required
 def delete_expense(request,id):
     expense = Expense.objects.get(id=id,user=request.user)
     if request.method == 'POST':
@@ -103,6 +109,7 @@ def register_page(request):
         return redirect('expense_list')
     return render(request,'register_page.html')
 
+@login_required
 def search_expense(request):
     query = request.GET.get('q', '')
     expense = Expense.objects.filter(user=request.user)
