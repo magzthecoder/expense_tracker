@@ -10,3 +10,8 @@ class ExpenseForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         # Only show categories owned by the currently logged-in user in the task form dropdown
         self.fields['category'].queryset = Category.objects.filter(user=user)
+
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = ['category']

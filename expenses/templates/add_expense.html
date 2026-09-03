@@ -9,7 +9,7 @@
     <h1>Add Expense</h1>
     <form method="POST">
         {% csrf_token %}
-        <p>{{form.category}}</p>
+        <p>{{form.category}}</p> <a href="{% url 'add_category'  %}">Add Category</a> <br>
         <p>Name:{{form.expense_name}}</p>
         <p>Price:{{form.expense_price}}</p>
         <p>Date:{{form.date_bought}}</p>

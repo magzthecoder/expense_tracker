@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from .models import Category, Expense
-from .forms import ExpenseForm
+from .forms import ExpenseForm, CategoryForm
 from django.contrib import messages
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout 
@@ -35,6 +35,22 @@ def add_expense(request):
             return redirect('expense_list')
     else:
         form = ExpenseForm(user=request.user)
+    context = {
+        'form':form
+    }
+    return render(request,'add_expense.html',context)
+
+@login_required
+def add_category(request):
+    if request.method == 'POST':
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            category = form.save(commit=False)
+            category.user = request.user
+            category.save()
+            return redirect('add_expense')
+    else:
+        form = CategoryForm()
     context = {
         'form':form
     }
