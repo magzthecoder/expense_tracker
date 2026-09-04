@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models import UniqueConstraint
 
 class Category(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
@@ -9,6 +10,9 @@ class Category(models.Model):
         return self.category
     
     class Meta:
+        constraints =[
+            UniqueConstraint(fields=["category","user"], name="unique_category")
+        ]
         verbose_name_plural = "Categories"
 
 class Expense(models.Model):

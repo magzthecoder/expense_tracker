@@ -44,7 +44,7 @@ def add_expense(request):
 @login_required
 def add_category(request):
     if request.method == 'POST':
-        form = CategoryForm(request.POST)
+        form = CategoryForm(request.POST,user=request.user)
         if form.is_valid():
             category = form.save(commit=False)
             category.user = request.user
@@ -52,7 +52,7 @@ def add_category(request):
             messages.success(request, "Category Added")
             return redirect('add_expense')
     else:
-        form = CategoryForm()
+        form = CategoryForm(user=request.user)
     context = {
         'form':form
     }
