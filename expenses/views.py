@@ -1,4 +1,5 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect, get_object_or_404
+from django.http import HttpResponse
 from .models import Category, Expense
 from .forms import ExpenseForm, CategoryForm
 from django.contrib import messages
@@ -17,7 +18,7 @@ def expense_list(request):
 
 @login_required
 def expense_detail(request,id):
-    expense = Expense.objects.get(id=id,user=request.user)
+    expense = get_object_or_404(Expense,id=id,user=request.user)
     context = {
         'expense':expense
     }
@@ -48,17 +49,18 @@ def add_category(request):
             category = form.save(commit=False)
             category.user = request.user
             category.save()
+            messages.success(request, "Category Added")
             return redirect('add_expense')
     else:
         form = CategoryForm()
     context = {
         'form':form
     }
-    return render(request,'add_expense.html',context)
+    return render(request,'add_category.html',context)
 
 @login_required
 def update_expense(request,id):
-    expense = Expense.objects.get(id=id, user=request.user)
+    expense = get_object_or_404(Expense,id=id,user=request.user)
     if request.method == 'POST':
         form = ExpenseForm(request.POST, instance=expense)
         if form.is_valid():
@@ -66,7 +68,7 @@ def update_expense(request,id):
             messages.success(request, "Expense Updated")
             return redirect ('expense_detail',id=expense.id)
     else:
-        form = ExpenseForm(user=request.user)
+        form = ExpenseForm(instance=expense ,user=request.user)
     context = {
         'form':form
     }
@@ -74,7 +76,7 @@ def update_expense(request,id):
 
 @login_required
 def delete_expense(request,id):
-    expense = Expense.objects.get(id=id,user=request.user)
+    expense = get_object_or_404(Expense,id=id,user=request.user)
     if request.method == 'POST':
         expense.delete()
         messages.info(request, "Expense Deleted")
