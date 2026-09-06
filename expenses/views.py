@@ -72,7 +72,7 @@ def add_category(request):
 def update_expense(request,id):
     expense = get_object_or_404(Expense,id=id,user=request.user)
     if request.method == 'POST':
-        form = ExpenseForm(request.POST, instance=expense)
+        form = ExpenseForm(request.POST, instance=expense,)
         if form.is_valid():
             form.save()
             messages.success(request, "Expense Updated")
@@ -83,6 +83,22 @@ def update_expense(request,id):
         'form':form
     }
     return render(request,'add_expense.html',context)
+
+@login_required
+def update_category(request,id):
+    category = get_object_or_404(Category,id=id,user=request.user)
+    if request.method == 'POST':
+        form = CategoryForm(request.POST, instance=category,user=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request,"Category Updated")
+            return redirect('category_list')
+    else:
+        form = CategoryForm(instance=category, user=request.user)
+    context = {
+        'form':form
+    }
+    return render(request,'add_category.html',context)
 
 @login_required
 def delete_expense(request,id):
