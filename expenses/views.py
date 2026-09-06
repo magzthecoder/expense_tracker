@@ -112,6 +112,18 @@ def delete_expense(request,id):
     }
     return render(request, 'delete_expense.html',context)
 
+@login_required
+def delete_category(request,id):
+    category = get_object_or_404(Category,id=id,user=request.user)
+    if request.method == 'POST':
+        category.delete()
+        messages.info(request, "Category Delete")
+        return redirect('category_list')
+    context = {
+        'category':category
+    }
+    return render(request, 'delete_category.html',context)
+
 def login_page(request):
     if request.method == 'POST':
         username = request.POST.get('username')
