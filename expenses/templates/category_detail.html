@@ -12,5 +12,6 @@
     {% endfor %}
 
     <a href="{% url 'category_list' %}">Back</a>
+    <a href="{% url 'delete_category' id=category.id %}" >Delete</a>
 </body>
 </html>

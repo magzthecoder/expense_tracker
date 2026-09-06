@@ -19,5 +19,6 @@ urlpatterns = [
 
     path('expenses/category/<int:id>/update/',views.update_category,name='update_category'),
 
-    path('expenses/<int:id>/delete/',views.delete_expense,name='delete_expense')
+    path('expenses/<int:id>/delete/',views.delete_expense,name='delete_expense'),
+    path('expenses/category/<int:id>/delete/',views.delete_category,name='delete_category')
 ]
