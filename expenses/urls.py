@@ -6,6 +6,9 @@ urlpatterns = [
     path('logout/',views.logout_page,name='logout_page'),
     path('register/',views.register_page,name='register_page'),
     path('expenses/',views.expense_list,name='expense_list'),
+
+    path('expenses/category/',views.category_list,name='category_list'),
+
     path('expenses/add/',views.add_expense,name='add_expense'),
     path('expenses/search/', views.search_expense, name='search_expense'),
     path('expenses/category/add/',views.add_category,name='add_category'),

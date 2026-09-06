@@ -17,6 +17,16 @@ def expense_list(request):
     return render(request,'expense_list.html',context)
 
 @login_required
+def category_list(request):
+    categories = Category.objects.filter(user=request.user)
+    expenses = Expense.objects.filter(user=request.user)
+    context = {
+        'categories':categories,
+        'expenses':expenses
+    }
+    return render(request,'category_list.html',context)
+
+@login_required
 def expense_detail(request,id):
     expense = get_object_or_404(Expense,id=id,user=request.user)
     context = {
