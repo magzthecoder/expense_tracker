@@ -6,6 +6,21 @@ class ExpenseForm(forms.ModelForm):
     class Meta:
         model = Expense
         fields = ['expense_name','expense_price','date_bought','category']
+        widgets ={
+            'expense_name':forms.TextInput(attrs={
+                'class':'form-input',
+                'placeholder':'Enter expense name....'
+            }),
+            'expense_price':forms.TextInput(attrs={
+                'class':'form-input',
+                'placeholder':'Enter Price'
+            }),
+            'date_bought':forms.DateInput(attrs={
+                'class':'form-input',
+                "type": "date",
+            },
+            format="%Y-%m-%d")
+        }
 
     def __init__(self,*args,user=None, **kwargs):
         super().__init__(*args, **kwargs)

@@ -9,7 +9,6 @@
     <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
-
         <button class="submit-btn" button>Submit</button>
         <a href="{% url 'expense_list' %}">Back</a>
     </form>

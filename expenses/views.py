@@ -36,7 +36,7 @@ def expense_detail(request,id):
 
 @login_required
 def category_detail(request,id):
-    category = get_object_or_404(Category,id=id,user=request.user)
+    category = get_object_or_404(Category,id=id,user=request.user) # Data Base look up
     expenses = Expense.objects.filter(category=category,user=request.user) #"Give me all Expenses where the category is the selected category AND the user is the logged-in user."
     context = {
         'category':category,
@@ -47,7 +47,7 @@ def category_detail(request,id):
 @login_required
 def add_expense(request):
     if request.method == 'POST':
-        form = ExpenseForm(request.POST,user=request.user)
+        form = ExpenseForm(request.POST,user=request.user) # POST 
         if form.is_valid():
             expense = form.save(commit=False) #dont save expense into database yet
             expense.user = request.user # attach expense to a user
@@ -55,7 +55,7 @@ def add_expense(request):
             messages.success(request, "Expense added successfully")
             return redirect('expense_list')
     else:
-        form = ExpenseForm(user=request.user)
+        form = ExpenseForm(user=request.user) # GET 
     context = {
         'form':form
     }
