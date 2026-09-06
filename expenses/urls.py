@@ -12,7 +12,9 @@ urlpatterns = [
     path('expenses/add/',views.add_expense,name='add_expense'),
     path('expenses/search/', views.search_expense, name='search_expense'),
     path('expenses/category/add/',views.add_category,name='add_category'),
+
     path('expenses/<int:id>/detail/',views.expense_detail,name='expense_detail'),
+    path('expenses/category/<int:id>/detail/',views.category_detail,name='category_detail'),
     path('expenses/<int:id>/update/',views.update_expense,name='update_expense'),
 
     path('expenses/category/<int:id>/update/',views.update_category,name='update_category'),

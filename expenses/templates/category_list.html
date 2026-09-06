@@ -8,7 +8,7 @@
 <body>
     <h1>Categories</h1>
     {% for category in categories%}
-    <p>{{category.category}}</p>
+    <p><a href="{% url 'category_detail' category.id %}">{{category.category}}</a></p>
     {% endfor %}
 
     <p><a href="{% url 'expense_list' %}">Back To expense List</a></p>

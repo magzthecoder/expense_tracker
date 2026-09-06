@@ -35,6 +35,16 @@ def expense_detail(request,id):
     return render(request,'expense_detail.html',context)
 
 @login_required
+def category_detail(request,id):
+    category = get_object_or_404(Category,id=id,user=request.user)
+    expenses = Expense.objects.filter(category=category,user=request.user) #"Give me all Expenses where the category is the selected category AND the user is the logged-in user."
+    context = {
+        'category':category,
+        'expenses':expenses
+    }
+    return render(request,'category_detail.html',context)
+
+@login_required
 def add_expense(request):
     if request.method == 'POST':
         form = ExpenseForm(request.POST,user=request.user)
