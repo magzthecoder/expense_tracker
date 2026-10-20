@@ -82,7 +82,7 @@ def add_category(request):
 def update_expense(request,id):
     expense = get_object_or_404(Expense,id=id,user=request.user)
     if request.method == 'POST':
-        form = ExpenseForm(request.POST, instance=expense,)
+        form = ExpenseForm(request.POST, instance=expense, user=request.user)
         if form.is_valid():
             form.save()
             messages.success(request, "Expense Updated")
