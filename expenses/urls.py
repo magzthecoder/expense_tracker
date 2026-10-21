@@ -14,6 +14,7 @@ urlpatterns = [
     path('expenses/category/add/',views.add_category,name='add_category'),
 
     path('expenses/<int:id>/detail/',views.expense_detail,name='expense_detail'),
+    path('expenses/local-detail/',views.local_expense_detail,name='local_expense_detail'),
     path('expenses/category/<int:id>/detail/',views.category_detail,name='category_detail'),
     path('expenses/<int:id>/update/',views.update_expense,name='update_expense'),
 

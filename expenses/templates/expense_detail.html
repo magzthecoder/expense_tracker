@@ -10,6 +10,7 @@
     <p>Category:{{ expense.category}}</p>
     <p>Price:${{ expense.expense_price}}</p>
     <p>Date bought:{{ expense.date_bought}}</p>
+   
 
     <a href="{% url 'expense_list' %}">Back</a>
     <a href="{% url 'update_expense' id=expense.id %}">Edit</a>

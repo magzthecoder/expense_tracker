@@ -34,6 +34,9 @@ def expense_detail(request,id):
     }
     return render(request,'expense_detail.html',context)
 
+def local_expense_detail(request):
+    return render(request,'local_expense_detail.html')
+
 @login_required
 def category_detail(request,id):
     category = get_object_or_404(Category,id=id,user=request.user) # Data Base look up
