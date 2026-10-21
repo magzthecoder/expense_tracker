@@ -22,4 +22,12 @@ form.addEventListener("submit",function(event){
     expenses.push(expense);
     localStorage.setItem("expenses",JSON.stringify(expenses));
     console.log(expenses);
+    const saved_expenses = localStorage.getItem("expenses");
+    const expense_object = JSON.parse(saved_expenses);
+    for(let i = 0; i < expense_object.length;i++){
+        console.log(expense_object[i].name);
+        console.log(expense_object[i].price);
+        console.log(expense_object[i].category);
+        console.log(expense_object[i].date);
+    }
 });

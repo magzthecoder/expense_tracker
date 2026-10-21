@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,6 +16,8 @@
     <p><a href="{% url 'expense_detail' expense.id %}">{{expense.expense_name}}</a></p>
     {% endfor %}
 
+    <div id="saved"></div>
+
     
     {% if user.is_authenticated %} 
             <p>Welcome, {{ user.username }}!</p>
@@ -28,4 +31,5 @@
             <a href="{% url 'register_page' %}">Register</a> 
     {% endif %} 
 </body>
+    <script src="{% static 'js/expense_list.js' %}" defer></script>
 </html>
