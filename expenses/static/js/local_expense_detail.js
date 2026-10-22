@@ -6,7 +6,9 @@ const category = document.querySelector("#category");
 const price = document.querySelector("#price");
 const date = document.querySelector("#date");
 const delButton = document.querySelector("#delete");
-const backButton = document.querySelector("#back")
+const backButton = document.querySelector("#back");
+const edit = document.querySelector("#edit");
+edit.href = `/expenses/local-edit/?index=${index}`;
 
 let expenses = [];
 let result = localStorage.getItem("expenses");

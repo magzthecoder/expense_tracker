@@ -97,6 +97,9 @@ def update_expense(request,id):
     }
     return render(request,'add_expense.html',context)
 
+def local_expense_edit(request):
+    return render(request,'local_expense_edit.html')
+
 @login_required
 def update_category(request,id):
     category = get_object_or_404(Category,id=id,user=request.user)
