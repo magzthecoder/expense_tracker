@@ -1,4 +1,6 @@
 const paramsString = window.location.search;
+const userId = document.body.dataset.userId;
+const storageKey = `expenses_user_${userId}`;
 const index = new URLSearchParams(paramsString).get("index");
 const exp_name = document.querySelector("#name");
 const category = document.querySelector("#category");
@@ -10,7 +12,7 @@ const form = document.querySelector("#form");
 
 
 let expenses = [];
-let result = localStorage.getItem("expenses");
+let result = localStorage.getItem(storageKey);
 if(result){
     expenses = JSON.parse(result);
 }else{
@@ -38,7 +40,7 @@ form.addEventListener("submit",function(event){
         expenses[index].price = price.value;
         expenses[index].date =  date.value;
 
-        localStorage.setItem("expenses",JSON.stringify(expenses));
+        localStorage.setItem(storageKey, JSON.stringify(expenses))
         location.assign("/expenses/");
     }else{
         errorMessage.textContent = "Expense Not Found!!!"

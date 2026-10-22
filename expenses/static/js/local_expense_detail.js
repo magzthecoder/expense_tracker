@@ -1,4 +1,6 @@
 const paramsString = window.location.search;
+const userId = document.body.dataset.userId;
+const storageKey = `expenses_user_${userId}`;
 const errorMessage = document.querySelector("#error")
 const index = new URLSearchParams(paramsString).get("index");
 const exp_name = document.querySelector("#name");
@@ -11,7 +13,7 @@ const edit = document.querySelector("#edit");
 edit.href = `/expenses/local-edit/?index=${index}`;
 
 let expenses = [];
-let result = localStorage.getItem("expenses");
+let result = localStorage.getItem(storageKey);
 if(result){
     expenses = JSON.parse(result);
 }else{
@@ -28,7 +30,7 @@ if (expenses[index] != undefined){
     expenses = JSON.parse(result);
     expenses.splice(index,1);
 
-    localStorage.setItem("expenses",JSON.stringify(expenses));
+    localStorage.setItem(storageKey, JSON.stringify(expenses))
     location.assign("/expenses/");
 });
 

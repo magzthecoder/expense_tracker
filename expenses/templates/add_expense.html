@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ADD</title>
 </head>
-<body>
+<body data-user-id="{{ user.id }}">
     <h1>Add Expense</h1>
     <form method="POST" id="form">
         {% csrf_token %}

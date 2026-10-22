@@ -6,17 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expenses List</title>
 </head>
-<body>
+<body data-user-id="{{ user.id }}">
     <h1>My Expenses</h1>
-    <form action="{% url 'search_expense' %}" method="GET" style="margin-bottom: 20px;">
+    <!-- <form action="{% url 'search_expense' %}" method="GET" style="margin-bottom: 20px;">
             <input type="text" name="q" value="{{ query }}" placeholder="Search...">
             <button type="submit">Search</button>
          </form>
-    <!-- {% for expense in expenses %}
+    {% for expense in expenses %}
     <p><a href="{% url 'expense_detail' expense.id %}">{{expense.expense_name}}</a></p>
     {% endfor %} -->
-
-    <div id="saved"></div>
+    
+    <input type="text" id="search" placeholder="Search....">
+    <div id="list"></div>
+    <p id="message"></p>
 
     
     {% if user.is_authenticated %} 
