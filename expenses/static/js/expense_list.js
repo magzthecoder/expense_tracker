@@ -11,10 +11,7 @@ if(result){
 }else{
     expenses = []
 }
-console.log(expenses);
 for(let i = 0; i < expenses.length;i++){
-    console.log(expenses[i].name);
-
     const name = document.createElement("p");
     const nameLink = document.createElement("a");
     nameLink.href = `/expenses/local-detail/?index=${i}`;
@@ -28,8 +25,8 @@ searchBar.addEventListener("input",function(){
     list.innerHTML = "";
     message.textContent = "";
     const searchResult = searchBar.value;
-    const mapped = expenses.map((expenses,index) =>{
-       return {expense:expenses,
+    const mapped = expenses.map((expense,index) =>{
+       return {expense:expense,
         index:index}
     });
     const newResult = mapped.filter((expenses,i) =>{
@@ -48,7 +45,7 @@ searchBar.addEventListener("input",function(){
             paraName.append(linkName);
             list.append(paraName);
         }
-    }else if(newResult.length === 0){
+    }else{
         message.textContent = "No expenses found";
     }
     
